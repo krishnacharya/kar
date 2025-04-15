@@ -39,6 +39,11 @@ const rssContentEnhancer = (): AstroIntegration => {
 
 				// Process each item
 				for (const item of items) {
+					// Add this guard
+					if (!item || !item.link) {
+						console.warn("Skipping item with missing link:", item?.title ?? item);
+						continue;
+					}
 					const segments = item.link.split("/").filter(Boolean);
 					const encodedSlug = segments.pop();
 					const slug = decodeURIComponent(encodedSlug);
