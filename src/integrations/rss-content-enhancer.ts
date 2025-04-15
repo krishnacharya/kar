@@ -17,6 +17,14 @@ const rssContentEnhancer = (): AstroIntegration => {
 				const rssPath = path.join(distDir, "rss.xml");
 
 				// Read and parse RSS XML
+				// const rssContent = await fs.readFile(rssPath, "utf-8");
+				try {
+					await fs.access(rssPath);
+				} catch {
+					console.warn("[rss-content-enhancer] Skipping: rss.xml not found.");
+					return;
+				}
+
 				const rssContent = await fs.readFile(rssPath, "utf-8");
 
 				const parserOptions = {
